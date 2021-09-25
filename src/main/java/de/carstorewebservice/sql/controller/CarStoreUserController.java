@@ -1,7 +1,7 @@
 package de.carstorewebservice.sql.controller;
 
-import de.carstorewebservice.sql.model.User;
-import de.carstorewebservice.sql.repository.UserRepository;
+import de.carstorewebservice.sql.model.CareStoreUser;
+import de.carstorewebservice.sql.repository.CarStoreUserRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class UserController
-{
+public class CarStoreUserController {
+
     @Autowired
-    private UserRepository repository;
+    private CarStoreUserRepository repository;
 
 
 
@@ -45,22 +45,22 @@ public class UserController
         }
     }
     @GetMapping("/user/load")
-    public User getUser(@RequestBody UserID userID) {
+    public CareStoreUser getUser(@RequestBody UserID userID) {
         System.err.println(userID.getId());
         return repository.findById(1);
     }
 
     @GetMapping("/user/loadList")
-    public List<User> getUser() {
-        List<User>userList= new ArrayList<>();
-        for(User user:repository.findAll()){
+    public List<CareStoreUser> getUser() {
+        List<CareStoreUser> userList= new ArrayList<>();
+        for(CareStoreUser user:repository.findAll()){
             userList.add(user);
         }
         return userList;
     }
 
     @PostMapping("/user/save")
-    public String saveUser(@RequestBody User user) throws Exception {
+    public String saveUser(@RequestBody CareStoreUser user) throws Exception {
         try {
             repository.saveAndFlush(user);
             return "Success to save new User";
@@ -69,7 +69,6 @@ public class UserController
         }
     }
 }
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

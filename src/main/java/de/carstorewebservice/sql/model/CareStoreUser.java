@@ -3,8 +3,8 @@ package de.carstorewebservice.sql.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Users")
-public class User {
+@Table(name = "CareStoreUser")
+public class CareStoreUser {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "userId", nullable = false)
@@ -20,9 +20,9 @@ public class User {
     @Column(name = "permission", nullable = false)
     private String permission;
 
-    public User() {}
+    public CareStoreUser() {}
 
-    public User(String firstName, String lastName,String email, String password,String permission) {
+    public CareStoreUser(String firstName, String lastName,String email, String password,String permission) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

@@ -2,7 +2,8 @@ package de.carstorewebservice.secruity.service;
 
 
 
-import de.carstorewebservice.sql.repository.UserRepository;
+import de.carstorewebservice.sql.model.CareStoreUser;
+import de.carstorewebservice.sql.repository.CarStoreUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,11 +17,11 @@ import java.util.ArrayList;
 public class UserService implements UserDetailsService {
 
     @Autowired
-    private UserRepository repository;
+    private CarStoreUserRepository repository;
     //Gibt den User für UserDetails zurück
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        for(de.carstorewebservice.sql.model.User user:repository.findAll()){
+        for(CareStoreUser user:repository.findAll()){
             if(user.getEmail().equals(username)){
                 User credentialUser = new User(username,user.getPassword(), new ArrayList<>());
                 return credentialUser;
