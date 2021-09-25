@@ -1,4 +1,4 @@
-package de.carstorewebservice.model;
+package de.carstorewebservice.secruity.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class JwtResponse {
-    private String jwtToken;
+public class JwtRequest {
+
+    private String username;
+    private String password;
 }

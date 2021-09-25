@@ -1,6 +1,10 @@
 package de.carstorewebservice.secruity.controller;
 
 
+import de.carstorewebservice.secruity.model.JwtRequest;
+import de.carstorewebservice.secruity.model.JwtResponse;
+import de.carstorewebservice.secruity.service.UserService;
+import de.carstorewebservice.secruity.util.JWTUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -21,10 +25,6 @@ public class AuthenticateController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
-    public String home() {
-        return "Welcome to Daily Code Buffer!!";
-    }
 
     @PostMapping("/authenticate")
     public JwtResponse authenticate(@RequestBody JwtRequest jwtRequest) throws Exception{
