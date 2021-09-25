@@ -24,15 +24,6 @@ public class JacksonConfiguration {
         return new Jdk8Module();
     }
 
-    /*
-     * Support for Hibernate types in Jackson.
-     */
-//    @Bean
-//    public Hibernate5Module hibernate5Module() {
- //       return new Hibernate5Module();
- //   }
-
-
     @Bean
     public ObjectMapper objectMapper() {
         ObjectMapper mapper = new ObjectMapper();
