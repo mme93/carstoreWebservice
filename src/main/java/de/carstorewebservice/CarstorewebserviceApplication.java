@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @SpringBootApplication
 public class CarstorewebserviceApplication {
+
 	@GetMapping("/")
 	public String index() {
 		return "Hallo ich bin ein SpringBoot";
 	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(CarstorewebserviceApplication.class, args);
 	}
