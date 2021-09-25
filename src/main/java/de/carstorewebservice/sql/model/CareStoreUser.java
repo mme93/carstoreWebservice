@@ -3,11 +3,11 @@ package de.carstorewebservice.sql.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "CareStoreUser")
+@Table(name = "user")
 public class CareStoreUser {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "userId", nullable = false)
+    @Column(name = "userId")
     private Long userId;
     @Column(name = "firstName", nullable = false)
     private String firstName;

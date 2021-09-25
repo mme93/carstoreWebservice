@@ -1,10 +1,8 @@
 package de.carstorewebservice.sql.controller;
 
 import de.carstorewebservice.sql.model.CareStoreUser;
+import de.carstorewebservice.sql.model.UserID;
 import de.carstorewebservice.sql.repository.CarStoreUserRepository;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,20 +56,20 @@ public class CarStoreUserController {
         }
         return userList;
     }
-
+    //Prüfen ob user existiert
+    //wird hier nicht komplet gemacht
     @PostMapping("/user/save")
     public String saveUser(@RequestBody CareStoreUser user) throws Exception {
         try {
+            for(CareStoreUser dbUser:repository.findAll()){
+                if(dbUser.equals(user)){
+                    return "User allready exist";
+                }
+            }
             repository.saveAndFlush(user);
             return "Success to save new User";
         } catch (Exception e) {
             return e.getMessage();
         }
     }
-}
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-class UserID{
-    long id;
 }
