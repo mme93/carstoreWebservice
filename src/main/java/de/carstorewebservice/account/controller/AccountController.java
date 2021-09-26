@@ -4,6 +4,8 @@ import de.carstorewebservice.sql.model.CareStoreUser;
 import de.carstorewebservice.sql.model.UserID;
 import de.carstorewebservice.sql.repository.CarStoreUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -15,36 +17,33 @@ public class AccountController {
     @Autowired
     private CarStoreUserRepository repository;
 
-    @GetMapping("/registration")
-    public String reg(){
-        return "Ich regestriere dich!";
-    }
 
     @PutMapping
-    private String updateUser(@RequestBody long id){
-        if(!repository.existsById(id)){
+    private String updateUser(@RequestBody long id) {
+        if (!repository.existsById(id)) {
             return "Error: No User with ID found!";
         }
-        try{
+        try {
             repository.save(repository.findById(id));
-            return "User with id: "+id+" Succesfull update!";
-        }catch (Exception e){
-            return  e.getMessage();
+            return "User with id: " + id + " Succesfull update!";
+        } catch (Exception e) {
+            return e.getMessage();
         }
     }
 
     @DeleteMapping("/user/delete")
-    public String deleteUser(@RequestBody long id){
-        if(!repository.existsById(id)){
+    public String deleteUser(@RequestBody long id) {
+        if (!repository.existsById(id)) {
             return "Error: No User with ID found!";
         }
-        try{
+        try {
             repository.delete(repository.findById(id));
-            return "User with id: "+id+" Successfull delted!";
-        }catch (Exception e){
-            return  e.getMessage();
+            return "User with id: " + id + " Successfull delted!";
+        } catch (Exception e) {
+            return e.getMessage();
         }
     }
+
     @GetMapping("/user/load")
     public CareStoreUser getUser(@RequestBody UserID userID) {
         System.err.println(userID.getId());
@@ -53,8 +52,8 @@ public class AccountController {
 
     @GetMapping("/user/loadList")
     public List<CareStoreUser> getUser() {
-        List<CareStoreUser> userList= new ArrayList<>();
-        for(CareStoreUser user:repository.findAll()){
+        List<CareStoreUser> userList = new ArrayList<>();
+        for (CareStoreUser user : repository.findAll()) {
             userList.add(user);
         }
         return userList;
@@ -62,14 +61,16 @@ public class AccountController {
 
     //Prüfen ob user existiert
     //wird hier nicht komplet gemacht
-    @PostMapping("/user/save")
+    @PostMapping("/user/registration")
     public String saveUser(@RequestBody CareStoreUser user) throws Exception {
         try {
-            for(CareStoreUser dbUser:repository.findAll()){
-                if(dbUser.equals(user)){
+            for (CareStoreUser dbUser : repository.findAll()) {
+                if (dbUser.getUserId().equals(user.getUserId()) || dbUser.getEmail().equals(user.getEmail())) {
                     return "User allready exist";
                 }
             }
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             repository.saveAndFlush(user);
             return "Success to save new User";
         } catch (Exception e) {
